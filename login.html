@@ -1,0 +1,120 @@
+<script>
+    function login() {
+        var xmlhttp = new XMLHttpRequest();
+        var username = document.getElementById('username').value;
+        var password = document.getElementById('password').value;
+        var url = "/ajaxblog/api.php?do=login&username=" + username + "&password=" + password;
+        xmlhttp.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+            		console.log(this.responseText);
+                var obj1 = JSON.parse(this.responseText);
+                if (obj1.err == 0) {
+                    window.location.href="member.php";
+                }
+                else{
+                    document.getElementById("login_error").innerHTML = obj1['errmsg'];
+                }
+            }
+        };
+        xmlhttp.open("GET", url );
+        xmlhttp.send();
+    }
+    
+        function showhide() {
+            var bbs = document.getElementById('section2');
+            if (bbs.style.display === 'none') {
+                bbs.style.display = 'block';
+            } else {
+                bbs.style.display = 'none';
+            }
+        }
+
+  function register()	{    //TODO reviwe 2017-9-26
+      var xmlhttp = new XMLHttpRequest();   // 建立XMLHttpRequest Object
+      var username_reg = document.getElementById('name_reg').value;
+      var password_reg = document.getElementById('password_reg').value;
+      var url = "/ajaxblog/api.php?do=register&username="+username_reg+"&password="+ password_reg;
+      xmlhttp.onreadystatechange = function() {
+          //console.log(this.readyState + " " + this.status);
+           if (this.readyState == 4 && this.status == 200) {
+               console.log(this.responseText);
+               var obj2 = JSON.parse(this.responseText);
+               if (obj2.err == 0) {
+                   alert('Registration successful，please login');  //成功
+               }else {
+                   alert('registration fail');
+               }
+           }else{
+           }
+      };
+      xmlhttp.open("GET", url);
+      xmlhttp.send();
+  }
+</script>
+
+<!DOCTYPE html>
+<html>
+<meta charset = "UTF-8">
+<style>
+    div.container {
+        width: 100%;
+        border: 1px solid gray;
+    }
+
+    header, footer {
+        padding: 1em;
+        color: white;
+        background-color: black;
+        clear: left;
+        text-align: center;
+    }
+
+    nav {
+        float: left;
+        max-width: 160px;
+        margin: 0;
+        padding: 1em;
+    }
+
+    nav ul {
+        list-style-type: none;
+        padding: 0;
+    }
+
+    nav ul a {
+        text-decoration: none;
+    }
+
+    nav ul button{
+        text-decoration: none;
+    }
+
+    article {
+        margin-left: 170px;
+        border-left: 1px solid gray;
+        padding: 32px;
+        overflow: hidden;
+    }
+</style>
+
+
+<div id="login">
+    <label>用户登录</label><br>
+    用户名:
+    <input type="text" name="username" id="username"> <br>
+    密码  :
+    <input type="password" name="password" id="password"> <br>
+    <input type="button" value="登录" onclick="login()">
+    <p id="login_error"></p>
+    <button onclick="showhide()">显示/隐藏用户注册</button>
+</div>
+<hr>
+<div id="section2">
+    <strong></strong><br>
+    <label >用户注册: </label>
+    <input type='text' name='name_reg' id='name_reg' maxlength="50"/> <br>
+    <label >密码</label>
+    <input type='password' name='password_reg' id='password_reg' maxlength='50'/> <br>
+    <p id="register_error" style="color:red"></p>
+    <input type='button' value='提交' onclick="register()">
+</div>
