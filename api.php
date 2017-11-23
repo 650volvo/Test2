@@ -1,7 +1,7 @@
 <?php
 $conn = new mysqli("meddev.rdsm6y2ok4ji834.rds.bj.baidubce.com","gsj","ranknow123","gsjdb");
 if ($conn->connect_error){
-    die("Connection failed:".$conn->connect_error);
+    die("Connection failed:".$conn->connect_error);  //2017-11-23
 }
 if(!isset($_GET['do'])) {
     exit(json_encode(['err'=>1, 'errmsg'=>'缺少参数do']));  //TODO jsfesfle
